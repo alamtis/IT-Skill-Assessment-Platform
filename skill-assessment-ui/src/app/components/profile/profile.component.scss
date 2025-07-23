@@ -1,0 +1,46 @@
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  min-height: calc(100vh - 64px - 48px);
+}
+
+.profile-card {
+  width: 100%;
+  max-width: 500px;
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.5rem;
+  justify-content: center;
+}
+
+mat-card-subtitle {
+  text-align: center;
+  margin-top: 8px;
+}
+
+mat-card-content {
+  margin-top: 20px;
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.submit-button {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

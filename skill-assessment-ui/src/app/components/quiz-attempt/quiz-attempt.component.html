@@ -1,0 +1,74 @@
+<div class="attempt-page-container">
+  <!-- Loading Spinner for initial load -->
+  <div *ngIf="isLoading" class="loading-container">
+    <mat-spinner diameter="80"></mat-spinner>
+    <p>Preparing Your Quiz...</p>
+  </div>
+
+  <!-- Main Quiz Content -->
+  <div *ngIf="!isLoading && quiz">
+    <mat-card class="quiz-card">
+      <mat-card-header>
+        <mat-card-title class="quiz-title">{{ quiz.title }}</mat-card-title>
+        <mat-card-subtitle>{{ quiz.description }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="quizForm">
+          <mat-stepper #stepper [linear]="true" orientation="vertical">
+
+            <!-- Dynamically create a step for each question -->
+            <mat-step *ngFor="let question of quiz.questions; let i = index; let last = last"
+                      [formGroupName]="question.id">
+              <ng-template matStepLabel>Question {{ i + 1 }}</ng-template>
+
+              <p class="question-text">{{ i + 1 }}. {{ question.questionText }}</p>
+
+              <mat-radio-group class="options-group" formControlName="submittedOption">
+                <mat-radio-button [id]="'q' + question.id + '-optA'" class="option-button" value="A">
+                  <label [for]="'q' + question.id + '-optA'" class="option-label">
+                    <span>A)</span> {{ question.optionA }}
+                  </label>
+                </mat-radio-button>
+
+                <mat-radio-button [id]="'q' + question.id + '-optB'" class="option-button" value="B">
+                  <label [for]="'q' + question.id + '-optB'" class="option-label">
+                    <span>B)</span> {{ question.optionB }}
+                  </label>
+                </mat-radio-button>
+
+                <mat-radio-button [id]="'q' + question.id + '-optC'" class="option-button" value="C">
+                  <label [for]="'q' + question.id + '-optC'" class="option-label">
+                    <span>C)</span> {{ question.optionC }}
+                  </label>
+                </mat-radio-button>
+
+                <mat-radio-button [id]="'q' + question.id + '-optD'" class="option-button" value="D">
+                  <label [for]="'q' + question.id + '-optD'" class="option-label">
+                    <span>D)</span> {{ question.optionD }}
+                  </label>
+                </mat-radio-button>
+              </mat-radio-group>
+
+              <div class="step-actions">
+                <button *ngIf="i > 0" mat-stroked-button matStepperPrevious>Back</button>
+                <button *ngIf="!last" [disabled]="quizForm.get('question' + i)?.invalid" color="primary" mat-raised-button
+                        matStepperNext>
+                  Next
+                </button>
+              </div>
+            </mat-step>
+
+          </mat-stepper>
+        </form>
+      </mat-card-content>
+
+      <mat-card-actions class="final-submit-actions">
+        <button (click)="submitQuiz()" [disabled]="isSubmitting || quizForm.invalid" color="accent" mat-flat-button>
+          <mat-icon>done_all</mat-icon>
+          <span *ngIf="!isSubmitting">Submit Final Answers</span>
+          <mat-spinner *ngIf="isSubmitting" diameter="24"></mat-spinner>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

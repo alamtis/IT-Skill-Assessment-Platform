@@ -1,0 +1,49 @@
+$toolbar-height: 64px;
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.main-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+}
+
+.toolbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: white;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+.toolbar-button {
+  margin: 0 4px;
+}
+
+.content-wrapper {
+  flex: 1;
+  background-color: #f4f7f6;
+  padding: 24px 32px;
+  overflow-y: auto;
+}
+
+::ng-deep .mat-mdc-menu-item {
+  .mat-icon {
+    margin-right: 16px; // Add space between the icon and the text
+    color: #555;
+  }
+}

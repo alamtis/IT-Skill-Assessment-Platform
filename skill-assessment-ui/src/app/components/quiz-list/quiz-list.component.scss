@@ -1,0 +1,98 @@
+$card-padding: 24px;
+$grid-gap: 32px;
+$primary-color: #3f51b5;
+
+.list-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+h2 {
+  font-size: 2.5rem;
+  font-weight: 400;
+  margin-bottom: $grid-gap;
+  text-align: center;
+  color: #333;
+}
+
+.quiz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: $grid-gap;
+}
+
+.quiz-card {
+  padding: 0;
+  border-radius: 8px !important;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease-in-out, box-shadow 0.25s ease-in-out;
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  }
+}
+
+::ng-deep .quiz-card .mat-mdc-card-header {
+  padding: $card-padding;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+::ng-deep .quiz-card .mat-mdc-card-title {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: $primary-color;
+}
+
+::ng-deep .quiz-card .mat-mdc-card-subtitle {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #666;
+}
+
+.mat-mdc-card-content {
+  padding: $card-padding;
+  flex-grow: 1;
+  color: #444;
+  line-height: 1.6;
+}
+
+.mat-mdc-card-actions {
+  padding: 0 $card-padding $card-padding;
+  margin: 0;
+  display: flex;
+
+  button {
+    width: 100%;
+    padding: 12px 0 !important;
+    font-size: 1rem;
+  }
+}
+
+.loading-container, .no-quizzes-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  color: #777;
+}
+
+.no-quizzes-message {
+  text-align: center;
+  font-style: italic;
+  font-size: 1.2rem;
+
+  mat-icon {
+    font-size: 64px;
+    width: 64px;
+    height: 64px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+  }
+}

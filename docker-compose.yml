@@ -1,0 +1,55 @@
+
+services:
+  db:
+    image: postgres
+    container_name: skill-assessment-db
+    restart: always
+    environment:
+      POSTGRES_DB: skill_assessment_db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend-app:
+    build: ./skill-assessment-platform
+    container_name: skill-assessment-app
+    restart: on-failure
+    depends_on:
+      - db
+    ports:
+      - "8080:8080"
+    environment:
+      # Use the internal Docker network hostname 'db'
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/skill_assessment_db
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: password
+      # --- IMPORTANT: Set these variables in a .env file or your environment ---
+      APP_JWT_SECRET: YourSuperSecretKeyForJWTsWhichIsLongAndSecure1234567890
+      GEMINI_API_KEY: "AIzaSyAG4PPr1tluYn7r6GQlpV0NgBW6jJ6zdvs"
+      ADMIN_USERNAME: admin
+      ADMIN_EMAIL: admin@example.com
+      ADMIN_PASSWORD: admin123
+
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+  frontend-app:
+    # Point the build context to your Angular app directory
+    build: ./skill-assessment-ui
+    container_name: skill-assessment-frontend
+    restart: always
+    ports:
+      # Map port 4200 on your host machine to port 80 inside the container
+      - "4200:4200"
+    depends_on:
+      # It's good practice to wait for the backend to start
+      - backend-app
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+
+volumes:
+  postgres_data:

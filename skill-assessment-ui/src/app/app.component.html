@@ -1,0 +1,60 @@
+<div class="app-container">
+  <mat-toolbar color="primary" class="main-toolbar mat-elevation-z4">
+    <!-- Logo and Title -->
+    <a routerLink="/quizzes" class="toolbar-brand">
+      <mat-icon>assessment</mat-icon>
+      <span>{{ title }}</span>
+    </a>
+
+    <!-- Spacer to push content to the sides -->
+    <span class="toolbar-spacer"></span>
+
+    <!-- Buttons for Logged-Out Users (No change here) -->
+    <ng-container *ngIf="!authService.isLoggedIn()">
+      <a mat-stroked-button routerLink="/login" class="toolbar-button">Login</a>
+      <a mat-flat-button color="accent" routerLink="/register" class="toolbar-button">Register</a>
+    </ng-container>
+
+    <ng-container *ngIf="authService.isLoggedIn()">
+      <!-- Primary Navigation Links -->
+      <a mat-button routerLink="/quizzes" class="toolbar-button">Dashboard</a>
+
+      <!-- Admin-Only Links -->
+      <ng-container *ngIf="authService.isAdmin()">
+        <a mat-button routerLink="/admin" class="toolbar-button">Quiz Management</a>
+        <a mat-button routerLink="/admin/users" class="toolbar-button">User Analytics</a>
+      </ng-container>
+
+      <!-- Spacer to push the user menu to the far right -->
+      <span class="toolbar-spacer"></span>
+
+      <!-- User Menu Trigger -->
+      <button mat-icon-button [matMenuTriggerFor]="userMenu" aria-label="User account menu">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+
+      <!-- The User Menu Dropdown -->
+      <mat-menu #userMenu="matMenu" xPosition="before">
+        <button mat-menu-item routerLink="/profile">
+          <mat-icon>manage_accounts</mat-icon>
+          <span>Edit Profile</span>
+        </button>
+        <button mat-menu-item routerLink="/history">
+          <mat-icon>history</mat-icon>
+          <span>My History</span>
+        </button>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
+    </ng-container>
+
+  </mat-toolbar>
+
+  <!-- Main Content Area -->
+  <main class="content-wrapper">
+    <router-outlet></router-outlet>
+  </main>
+</div>

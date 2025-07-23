@@ -1,0 +1,53 @@
+<div class="history-container">
+  <div class="header">
+    <h1>My Quiz History</h1>
+    <p>Review your past performance and see how you've improved.</p>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-container">
+    <mat-spinner diameter="60"></mat-spinner>
+  </div>
+
+  <!-- Content State -->
+  <div *ngIf="!isLoading">
+    <!-- Empty State -->
+    <mat-card *ngIf="historyData.length === 0" class="empty-state-card">
+      <mat-card-content>
+        <mat-icon>history_toggle_off</mat-icon>
+        <h2>No History Found</h2>
+        <p>You haven't completed any quizzes yet. Go to the dashboard to get started!</p>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- History Table -->
+    <div *ngIf="historyData.length > 0" class="history-list">
+
+      <mat-card *ngFor="let attempt of historyData" class="history-card mat-elevation-z4" [ngClass]="getScoreClass(attempt.percentage)">
+
+        <!-- This card is the main flex container. These are its 3 direct children. -->
+
+        <!-- SECTION 1: Left-aligned content (Quiz Info) -->
+        <div class="card-section quiz-info">
+          <h3 class="quiz-title">{{ attempt.quizTitle }}</h3>
+          <p class="quiz-date">Completed on {{ attempt.completedAt | date:'longDate' }} at {{ attempt.completedAt | date:'shortTime' }}</p>
+        </div>
+
+        <!-- SECTION 2: Center-aligned content (Score) -->
+        <div class="card-section score-display">
+          <span class="score-value">{{ attempt.percentage | number:'1.0-0' }}</span>
+          <span class="score-percent">%</span>
+        </div>
+
+        <!-- SECTION 3: Right-aligned content (Actions) -->
+        <div class="card-section card-actions">
+          <button mat-flat-button color="primary" (click)="viewReport(attempt.quizAttemptId)">
+            View Report
+          </button>
+        </div>
+
+      </mat-card>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<h1 mat-dialog-title>Create New Quiz Manually</h1>
+<div mat-dialog-content>
+  <form [formGroup]="createForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline">
+      <mat-label>Quiz Title</mat-label>
+      <input matInput formControlName="title" required>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Description (Optional)</mat-label>
+      <textarea matInput formControlName="description"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>IT Profile</mat-label>
+      <mat-select formControlName="itProfile" required>
+        <mat-option *ngFor="let profile of itProfiles" [value]="profile">
+          {{ profile | titlecase }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Difficulty Level</mat-label>
+      <mat-select formControlName="difficultyLevel" required>
+        <mat-option *ngFor="let level of difficultyLevels" [value]="level">
+          {{ level | titlecase }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-stroked-button (click)="onCancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="createForm.invalid || isSubmitting">
+    <span *ngIf="!isSubmitting">Create Quiz</span>
+    <mat-spinner *ngIf="isSubmitting" diameter="24"></mat-spinner>
+  </button>
+</div>

@@ -1,0 +1,178 @@
+// Define variables for a consistent and easily maintainable design system
+:host {
+  --primary-color: #3f51b5;      // Material Indigo
+  --score-high-color: #4caf50;    // Material Green
+  --score-medium-color: #ff9800;   // Material Amber
+  --score-low-color: #f44336;      // Material Red
+  --border-color: #e0e0e0;
+  --text-muted-color: #6c757d;
+  --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  --border-radius: 8px;
+}
+
+// Main container for the entire page
+.history-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px 32px;
+}
+
+// Styling for the page header (H1 and subtitle)
+.header {
+  margin-bottom: 48px;
+  text-align: center;
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 400;
+    margin: 0 0 8px 0;
+  }
+  p {
+    font-size: 1.1rem;
+    color: var(--text-muted-color);
+  }
+}
+
+// Container for the list of cards
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; // Defines the space between each card
+}
+
+.history-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  padding: 20px 24px;
+  border-radius: var(--border-radius);
+  border-left: 5px solid transparent; // This border will be colored based on the score
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  }
+
+  // Dynamically apply the border color based on the score class from the .ts file
+  &.score-high { border-left-color: var(--score-high-color); }
+  &.score-medium { border-left-color: var(--score-medium-color); }
+  &.score-low { border-left-color: var(--score-low-color); }
+}
+
+// A common class for the three main sections within the card
+.card-section {
+  display: flex;
+  align-items: center;
+}
+
+// Section 1: Quiz Info (Left-aligned)
+.quiz-info {
+  flex-direction: column;
+  align-items: flex-start; // Align text to the left within this section
+  // flex: flex-grow, flex-shrink, flex-basis.
+  // This gives the title section more space to breathe.
+  flex: 1 1 50%;
+}
+
+.quiz-title {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin: 0 0 4px 0;
+  color: #333;
+}
+
+.quiz-date {
+  font-size: 0.9rem;
+  color: var(--text-muted-color);
+  margin: 0;
+}
+
+// Section 2: Score Display (Center-aligned)
+.score-display {
+  flex: 1 1 25%; // Takes up a quarter of the space
+  justify-content: center; // Horizontally center content within this section
+  align-items: baseline; // Aligns the '%' sign nicely with the number
+}
+
+.score-value {
+  font-size: 2.8rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.score-percent {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: #555;
+  margin-left: 4px;
+}
+
+// Dynamically color the score value based on the parent card's class
+.score-high .score-value { color: var(--score-high-color); }
+.score-medium .score-value { color: var(--score-medium-color); }
+.score-low .score-value { color: var(--score-low-color); }
+
+
+// Section 3: Action Button (Right-aligned)
+.card-actions {
+  flex: 1 1 25%; // Takes up a quarter of the space
+  justify-content: flex-end; // Horizontally align content to the right
+}
+
+
+@media (max-width: 768px) {
+  .history-card {
+    flex-direction: column; // Stack the sections vertically
+    align-items: stretch; // Make sections take up the full width
+    padding: 16px;
+  }
+
+  .card-section {
+    flex-basis: auto; // Let content height be automatic
+    justify-content: center; // Center all content on small screens
+    text-align: center;
+  }
+
+  .quiz-info {
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  .score-display {
+    margin-bottom: 20px;
+  }
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+.empty-state-card {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--text-muted-color);
+  border: 2px dashed var(--border-color);
+  background-color: #fafafa;
+
+  mat-icon {
+    font-size: 64px;
+    width: 64px;
+    height: 64px;
+    margin-bottom: 16px;
+    opacity: 0.6;
+  }
+
+  h2 {
+    margin: 0 0 8px 0;
+    color: #444;
+  }
+
+  p {
+    margin: 0;
+    font-size: 1rem;
+  }
+}

@@ -1,0 +1,45 @@
+<h1 mat-dialog-title>{{ isEditMode ? 'Edit User' : 'Create New User' }}</h1>
+<div *ngIf="isLoading" class="dialog-loading-spinner">
+  <mat-spinner diameter="50"></mat-spinner>
+</div>
+<div *ngIf="!isLoading">
+  <div mat-dialog-content>
+    <p>Create a new user account and assign their roles.</p>
+    <form (ngSubmit)="onSubmit()" [formGroup]="userForm">
+
+      <mat-form-field appearance="outline">
+        <mat-label>Username</mat-label>
+        <input formControlName="username" matInput required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input formControlName="email" matInput required type="email">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input [placeholder]="isEditMode ? 'Leave blank to keep current' : ''" [required]="!isEditMode" formControlName="password"
+               matInput type="password">
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Roles</mat-label>
+        <mat-select formControlName="roles" multiple required>
+          <mat-option *ngFor="let role of roles" [value]="role">
+            {{ role === 'ROLE_ADMIN' ? 'Administrator' : 'User' }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </form>
+  </div>
+
+  <div align="end" mat-dialog-actions>
+    <button mat-dialog-close mat-stroked-button>Cancel</button>
+    <button (click)="onSubmit()" [disabled]="userForm.invalid || isSubmitting" color="primary" mat-raised-button>
+      <span *ngIf="!isSubmitting">{{ isEditMode ? 'Update User' : 'Create User' }}</span>
+      <mat-spinner *ngIf="isSubmitting" diameter="24"></mat-spinner>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,144 @@
+.results-page-container {
+  max-width: 960px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+  gap: 1.5rem;
+  color: #666;
+  font-size: 1.5rem;
+}
+
+.summary-card {
+  margin-bottom: 32px;
+}
+
+.summary-title {
+  text-align: center;
+  font-size: 2rem;
+  width: 100%;
+}
+
+.summary-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 16px 24px;
+}
+
+.score-circle {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+
+  &.primary { background-color: #3f51b5; }
+  &.accent { background-color: #ff4081; }
+  &.warn { background-color: #f44336; }
+}
+
+.score-percentage {
+  font-size: 3rem;
+  font-weight: 500;
+}
+
+.score-fraction {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+mat-progress-bar {
+  width: 100%;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: center;
+  padding: 16px !important;
+}
+
+.feedback-tabs {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  background-color: white;
+}
+
+.tab-icon {
+  margin-right: 8px;
+}
+
+.tab-content {
+  padding: 24px;
+  min-height: 300px;
+  line-height: 1.6;
+
+  h3 {
+    font-size: 1.5rem;
+    margin-top: 0;
+  }
+
+  h4 {
+    margin-top: 24px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #3f51b5;
+  }
+}
+
+.report-summary {
+  font-style: italic;
+  color: #555;
+  margin-bottom: 24px;
+}
+
+.analysis-section {
+  padding: 16px 0;
+
+  h5 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin: 0 0 8px 0;
+  }
+}
+
+.performance-pill {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: white;
+
+  &.weak, &.needs.improvement {
+    background-color: #f44336; // warn color
+  }
+  &.strong {
+    background-color: #4caf50; // primary/success color
+  }
+  &.average {
+    background-color: #ff9800; // accent/warn color
+  }
+}
+
+mat-list[dense] {
+  .mat-mdc-list-item {
+    height: auto !important;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  .mat-mdc-list-item-unscoped-content {
+    white-space: normal;
+  }
+}

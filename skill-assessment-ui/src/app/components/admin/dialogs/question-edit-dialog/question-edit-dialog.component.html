@@ -1,0 +1,58 @@
+<!-- Use *ngIf to change the title dynamically -->
+<h1 mat-dialog-title>{{ isEditMode ? 'Edit Question' : 'Add New Question' }}</h1>
+
+<div mat-dialog-content>
+  <form [formGroup]="questionForm" (ngSubmit)="onSubmit()">
+
+    <!-- Question Text -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Question Text</mat-label>
+      <textarea matInput formControlName="questionText" required cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="3"></textarea>
+    </mat-form-field>
+
+    <div class="options-grid">
+      <mat-form-field appearance="outline">
+        <mat-label>Option A</mat-label>
+        <input matInput formControlName="optionA" required>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Option B</mat-label>
+        <input matInput formControlName="optionB" required>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Option C</mat-label>
+        <input matInput formControlName="optionC" required>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Option D</mat-label>
+        <input matInput formControlName="optionD" required>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Correct Answer</mat-label>
+      <mat-select formControlName="correctOption" required>
+        <mat-option value="A">Option A</mat-option>
+        <mat-option value="B">Option B</mat-option>
+        <mat-option value="C">Option C</mat-option>
+        <mat-option value="D">Option D</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Explanation (Optional)</mat-label>
+      <textarea matInput formControlName="explanation" cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2"></textarea>
+    </mat-form-field>
+
+  </form>
+</div>
+
+<!-- Dialog Actions -->
+<div mat-dialog-actions align="end">
+  <button mat-stroked-button (click)="onCancel()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="questionForm.invalid || isSubmitting">
+    <!-- Use *ngIf to change the button text dynamically -->
+    <span *ngIf="!isSubmitting">{{ isEditMode ? 'Update Question' : 'Add Question' }}</span>
+    <mat-spinner *ngIf="isSubmitting" diameter="24"></mat-spinner>
+  </button>
+</div>

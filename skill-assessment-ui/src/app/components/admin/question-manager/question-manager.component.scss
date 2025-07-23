@@ -1,0 +1,80 @@
+.manager-container {
+  padding: 24px 32px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.quiz-title {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.quiz-subtitle {
+  margin: 4px 0 0;
+  font-weight: 400;
+  color: #555;
+  font-size: 1.1rem;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+  height: 60vh;
+  gap: 1.5rem;
+  color: #666;
+  font-size: 1.5rem;
+}
+
+.table-container {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.question-text-cell {
+  max-width: 500px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 16px;
+}
+
+.actions-header {
+  text-align: right;
+  padding-right: 16px;
+}
+
+td.mat-mdc-cell:last-of-type {
+  text-align: right;
+}
+
+.no-questions-card {
+  text-align: center;
+  padding: 48px;
+  color: #777;
+  border: 2px dashed #ccc;
+  background-color: #fafafa;
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 16px;
+  }
+}

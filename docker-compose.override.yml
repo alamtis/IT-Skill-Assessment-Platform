@@ -1,0 +1,49 @@
+services:
+  backend-app:
+    # Your backend configuration is correct and remains the same
+    container_name: skill-assessment-app-dev
+    build:
+      context: ./skill-assessment-platform
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./skill-assessment-platform:/app
+      - maven-cache:/root/.m2
+      - /app/target
+    command: mvn spring-boot:run
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+
+  frontend-app:
+    container_name: skill-assessment-frontend-dev
+    build:
+      context: ./skill-assessment-ui
+      # The target: builder is fine if your Dockerfile has that stage,
+      # and it runs 'npm install'
+      target: builder
+
+    volumes:
+      # Mount only the 'src' directory for live-reloading of your component code
+      - ./skill-assessment-ui/src:/app/src
+
+      # Mount the key configuration files individually.
+      # This ensures they are present in the container's root.
+      - ./skill-assessment-ui/angular.json:/app/angular.json
+      - ./skill-assessment-ui/proxy.conf.json:/app/proxy.conf.json
+      - ./skill-assessment-ui/tsconfig.json:/app/tsconfig.json
+
+      # This "anonymous volume" is still crucial. It tells Docker to use
+      # the node_modules folder that was created inside the image during the
+      # build step, and NOT to overwrite it with your (likely empty) local one.
+      - /app/node_modules
+
+    # The command and port mapping you had were correct for the new approach
+    command: npm start
+    ports:
+      - "4200:4200"
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+
+volumes:
+  maven-cache:

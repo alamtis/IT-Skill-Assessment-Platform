@@ -1,0 +1,120 @@
+:host {
+  --auth-bg-color: #f4f7f6;
+  --auth-panel-color: #ffffff;
+  --auth-brand-bg: #3f51b5; // Material Indigo
+  --auth-brand-color: #ffffff;
+  --auth-card-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  --auth-border-radius: 12px;
+}
+
+.auth-page-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 64px); // Full height minus toolbar
+  background-color: var(--auth-bg-color);
+  padding: 24px;
+}
+
+.auth-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: 960px;
+  width: 100%;
+  border-radius: var(--auth-border-radius);
+  box-shadow: var(--auth-card-shadow);
+  overflow: hidden; // Important for border-radius on children
+  min-height: 550px;
+}
+
+// Left side: The branding panel
+.brand-panel {
+  background: var(--auth-brand-bg);
+  color: var(--auth-brand-color);
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+
+  .brand-icon {
+    font-size: 80px;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 24px;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 500;
+    margin: 0 0 16px;
+  }
+
+  p {
+    font-size: 1.1rem;
+    opacity: 0.8;
+    line-height: 1.6;
+  }
+}
+
+// Right side: The form panel
+.form-panel {
+  background: var(--auth-panel-color);
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .form-title {
+    font-size: 2rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #333;
+  }
+
+  .form-subtitle {
+    margin-bottom: 32px;
+    color: #666;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .submit-button {
+    margin-top: 16px;
+    padding: 12px 0;
+    font-size: 1rem;
+  }
+
+  .auth-actions {
+    text-align: center;
+    margin-top: 24px;
+    color: #555;
+
+    a {
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--auth-brand-bg);
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+// Responsive design for smaller screens
+@media (max-width: 768px) {
+  .auth-container {
+    grid-template-columns: 1fr; // Stack panels vertically
+  }
+
+  .brand-panel {
+    display: none; // Hide the brand panel on small screens for simplicity
+  }
+
+  .form-panel {
+    padding: 32px;
+  }
+}

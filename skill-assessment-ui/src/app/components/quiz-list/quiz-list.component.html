@@ -1,0 +1,31 @@
+<div class="list-container">
+  <h2>Available Quizzes</h2>
+  <!-- Show spinner while isLoading is true -->
+  <div *ngIf="isLoading" class="loading-container">
+    <mat-spinner diameter="60"></mat-spinner>
+    <p>Fetching Quizzes...</p>
+  </div>
+  <!-- Show content when isLoading is false -->
+  <div *ngIf="!isLoading">
+    <!-- Show a helpful message if no quizzes are found -->
+    <div *ngIf="quizzes.length === 0" class="no-quizzes-container">
+      <div class="no-quizzes-message">
+      <mat-icon>inbox</mat-icon>
+      <p>No quizzes are available at the moment. Please check back later.</p>
+      </div>
+    </div>
+  <div class="quiz-grid" *ngIf="quizzes.length > 0">
+    <mat-card *ngFor="let quiz of quizzes" class="quiz-card">
+      <mat-card-header>
+        <mat-card-title>{{ quiz.title }}</mat-card-title>
+        <mat-card-subtitle>{{ quiz.itProfile.replace('_', ' ') | titlecase }} | {{ quiz.difficultyLevel | titlecase }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ quiz.description }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="startQuiz(quiz.id)">Start Quiz</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

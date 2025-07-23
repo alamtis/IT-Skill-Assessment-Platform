@@ -1,0 +1,54 @@
+.dashboard-container {
+  padding: 24px;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.actions {
+  display: flex;
+  gap: 16px;
+}
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 48px;
+  min-height: 300px;
+  gap: 1rem;
+}
+.table-container {
+  border-radius: 8px;
+  overflow: hidden;
+}
+.center-align {
+  text-align: center;
+}
+.empty-state-card {
+  text-align: center;
+  padding: 48px 24px;
+  color: #777;
+  border: 2px dashed #ccc;
+  background-color: #fafafa;
+
+  mat-icon {
+    font-size: 64px;
+    width: 64px;
+    height: 64px;
+    margin-bottom: 16px;
+    opacity: 0.6;
+  }
+
+  h2 {
+    margin: 0 0 8px 0;
+    color: #444;
+  }
+
+  p {
+    margin: 0;
+    font-size: 1rem;
+  }
+}

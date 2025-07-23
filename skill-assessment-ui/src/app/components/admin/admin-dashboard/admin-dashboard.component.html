@@ -1,0 +1,79 @@
+<div class="dashboard-container">
+  <div class="header">
+    <h1>Admin Dashboard - Quiz Management</h1>
+    <div class="actions">
+      <button mat-flat-button color="primary" (click)="openCreateQuizDialog()">
+        <mat-icon>add</mat-icon>
+        Create Quiz Manually
+      </button>
+      <button mat-raised-button color="accent" (click)="openGenerateAiDialog()">
+        <mat-icon>smart_toy</mat-icon>
+        Generate with AI
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-container">
+    <mat-spinner diameter="60"></mat-spinner>
+    <p>Loading Quizzes...</p>
+  </div>
+
+  <div *ngIf="!isLoading" >
+    <mat-card *ngIf="dataSource.length === 0" class="empty-state-card">
+      <mat-card-content>
+        <mat-icon>inbox</mat-icon>
+        <h2>No Quizzes Found</h2>
+        <p>Get started by creating a quiz manually or generating one with AI.</p>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- The table should only be shown if there is data -->
+    <div *ngIf="dataSource.length > 0" class="table-container mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
+      <!-- Column Definitions -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef> Title </th>
+        <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="itProfile">
+        <th mat-header-cell *matHeaderCellDef> IT Profile </th>
+        <td mat-cell *matCellDef="let element"> {{element.itProfile | titlecase}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="difficultyLevel">
+        <th mat-header-cell *matHeaderCellDef> Difficulty </th>
+        <td mat-cell *matCellDef="let element"> {{element.difficultyLevel | titlecase}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="numberOfQuestions">
+        <th mat-header-cell *matHeaderCellDef class="center-align"> Questions </th>
+        <td mat-cell *matCellDef="let element" class="center-align">
+          {{ element.numberOfQuestions }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button color="primary" (click)="manageQuestions(element.id)" matTooltip="Manage Questions">
+            <mat-icon>edit_note</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deleteQuiz(element.id, element.title)" matTooltip="Delete Quiz">
+            <mat-icon>delete_forever</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    </div>
+  </div>
+</div>

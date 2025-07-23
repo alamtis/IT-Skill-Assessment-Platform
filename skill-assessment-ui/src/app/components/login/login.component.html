@@ -1,0 +1,39 @@
+<div class="auth-page-wrapper">
+  <div class="auth-container">
+
+    <!-- Left Branding Panel -->
+    <div class="brand-panel">
+      <mat-icon class="brand-icon">assessment</mat-icon>
+      <h1>Welcome Back!</h1>
+      <p>Assess your skills, track your progress, and level up your career.</p>
+    </div>
+
+    <!-- Right Form Panel -->
+    <div class="form-panel">
+      <h2 class="form-title">Login</h2>
+      <p class="form-subtitle">Please enter your credentials to continue.</p>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input matInput formControlName="username" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" type="password" required>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid || isSubmitting" class="submit-button">
+          <span *ngIf="!isSubmitting">Sign In</span>
+          <mat-spinner *ngIf="isSubmitting" diameter="24"></mat-spinner>
+        </button>
+      </form>
+
+      <div class="auth-actions">
+        <p>Don't have an account? <a routerLink="/register">Register here</a></p>
+      </div>
+    </div>
+
+  </div>
+</div>

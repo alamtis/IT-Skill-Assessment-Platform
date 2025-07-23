@@ -1,0 +1,105 @@
+<div class="results-page-container">
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-container">
+    <mat-spinner diameter="80"></mat-spinner>
+    <p>Generating Your Performance Report...</p>
+  </div>
+
+  <!-- Results Content -->
+  <div *ngIf="!isLoading && resultData">
+    <mat-card class="summary-card mat-elevation-z8">
+      <mat-card-header>
+        <mat-card-title class="summary-title">Quiz Results</mat-card-title>
+        <mat-card-subtitle *ngIf="report?.quiz">{{ report.quiz }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content class="summary-content">
+        <div class="score-circle" [ngClass]="getScoreColor()">
+          <div class="score-percentage">{{ resultData.percentage | number:'1.0-0' }}%</div>
+          <!-- Now this will work because the full report DTO has totalQuestions -->
+          <div class="score-fraction" *ngIf="resultData.answers">
+            {{ resultData.score | number:'1.0-0' }} / {{ resultData.answers.length | number:'1.0-0' }}
+          </div>
+        </div>
+        <p class="score-text">You answered <strong>{{ resultData.score }}</strong> out of <strong>{{ resultData.answers.length }}</strong> questions correctly.</p>
+        <mat-progress-bar [mode]="'determinate'" [value]="resultData.percentage" [color]="getScoreColor()"></mat-progress-bar>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-flat-button color="primary" (click)="takeAnotherQuiz()">
+          <mat-icon>quiz</mat-icon>
+          Take Another Quiz
+        </button>
+      </mat-card-actions>
+    </mat-card>
+
+    <!-- AI Feedback Section -->
+    <mat-tab-group mat-align-tabs="start" animationDuration="500ms" class="feedback-tabs">
+
+      <!-- Detailed Report Tab -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">assessment</mat-icon>
+          Detailed Report
+        </ng-template>
+        <div class="tab-content" *ngIf="report">
+          <h3>{{ report.overallPerformance || 'Performance Analysis' }}</h3>
+          <p class="report-summary">{{ report.summary }}</p>
+          <mat-divider></mat-divider>
+          <div *ngIf="report.detailedAnalysis">
+            <h4>Analysis of Your Answers:</h4>
+            <div *ngFor="let key of objectKeys(report.detailedAnalysis)">
+              <div class="analysis-section">
+                <h5>{{ report.detailedAnalysis[key].topic }}</h5>
+                <p><strong>Explanation:</strong> {{ report.detailedAnalysis[key].explanation }}</p>
+                <!-- Here we'll handle the recommended resources -->
+                <div *ngIf="report.detailedAnalysis[key].recommendedResources">
+                  <strong>Recommended Resources:</strong>
+                  <ul>
+                    <li *ngFor="let resource of report.detailedAnalysis[key].recommendedResources" [innerHTML]="linkify(resource)"></li>
+                  </ul>
+                </div>
+              </div>
+              <mat-divider></mat-divider>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+
+      <!-- Study Plan Tab -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">menu_book</mat-icon>
+          Personalized Study Plan
+        </ng-template>
+        <div class="tab-content" *ngIf="studyPlan">
+          <h3>{{ studyPlan.focus || studyPlan.focusAreas?.join(', ') || 'Your Personalized Study Plan' }}</h3>
+          <div *ngFor="let schedule of studyPlan.suggestedSchedule">
+            <h4>
+              {{ schedule.day || schedule.title }}: {{ schedule.topic || schedule.focus }}
+              <span *ngIf="schedule.time_commitment || schedule.duration">
+        ({{ schedule.time_commitment || schedule.duration }})
+      </span>
+            </h4>
+            <mat-list dense>
+              <mat-list-item *ngFor="let activity of schedule.activities">
+                <mat-icon matListItemIcon>check_circle_outline</mat-icon>
+                <div matListItemTitle>{{ activity }}</div>
+              </mat-list-item>
+            </mat-list>
+          </div>
+
+          <!-- Handle the additionalResources section -->
+          <div *ngIf="studyPlan.additionalResources">
+            <h4>Additional Resources:</h4>
+            <mat-list>
+              <mat-list-item *ngFor="let resource of studyPlan.additionalResources">
+                <mat-icon matListItemIcon>link</mat-icon>
+                <!-- We'll use a pipe or a method to make these clickable -->
+                <div matListItemTitle [innerHTML]="linkify(resource)"></div>
+              </mat-list-item>
+            </mat-list>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

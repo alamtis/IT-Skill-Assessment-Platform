@@ -1,0 +1,28 @@
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.options-grid {
+  display: grid;
+  // Create two columns of equal width with a gap between them
+  grid-template-columns: 1fr 1fr;
+  gap: 0 16px; // 0px vertical gap, 16px horizontal gap
+}
+
+mat-form-field {
+  margin-top: 8px;
+}
+
+// Ensure the spinner button keeps its size
+div[mat-dialog-actions] button {
+  min-width: 130px;
+  min-height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>Results details</h2>
+<mat-dialog-content>
+  <div *ngIf="isLoading" class="loading-container">
+    <mat-spinner></mat-spinner>
+  </div>
+  <app-results *ngIf="!isLoading" [resultDataInput]="fullResultData"></app-results>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

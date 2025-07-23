@@ -1,0 +1,96 @@
+<div class="analytics-container">
+  <div class="header">
+    <h1>User Analytics</h1>
+    <button mat-raised-button color="primary" (click)="openAddUserDialog()">
+      <mat-icon>person_add</mat-icon>
+      Add New User
+    </button>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-container">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <div *ngIf="!isLoading" class="table-container mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" [trackBy]="trackByUser" multiTemplateDataRows>
+
+      <!-- Column Definitions (No changes here) -->
+      <ng-container matColumnDef="userId">
+        <th mat-header-cell *matHeaderCellDef> User ID </th>
+        <td mat-cell *matCellDef="let user"> {{user.userId}} </td>
+      </ng-container>
+      <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef> Username </th>
+        <td mat-cell *matCellDef="let user"> {{user.username}} </td>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef> Email </th>
+        <td mat-cell *matCellDef="let user"> {{user.email}} </td>
+      </ng-container>
+      <ng-container matColumnDef="attemptCount">
+        <th mat-header-cell *matHeaderCellDef> Quizzes Taken </th>
+        <td mat-cell *matCellDef="let user"> {{user.attempts.length}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Actions </th>
+        <td mat-cell *matCellDef="let user">
+          <button mat-icon-button color="primary" (click)="openEditUserDialog(user); $event.stopPropagation()" matTooltip="Edit User">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+      <!-- Expanded Content Column. This is the definition for the content itself. -->
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let user" [attr.colspan]="columnsToDisplay.length">
+          <div class="user-detail-element" [@detailExpand]="user === expandedElement ? 'expanded' : 'collapsed'">
+            <!-- The nested table and content go here -->
+            <div *ngIf="user.attempts.length > 0; else noAttempts">
+              <br>
+              <br>
+              <h4>Quiz History for {{ user.username }}:</h4>
+              <table class="nested-table">
+                <thead>
+                <tr>
+                  <th>Quiz Title</th>
+                  <th>Score</th>
+                  <th>Date Completed</th>
+                  <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let attempt of user.attempts" class="attempt-item">
+                  <td>{{ attempt.quizTitle }}</td>
+                  <td>{{ attempt.percentage | number:'1.0-0' }}%</td>
+                  <td>{{ attempt.completedAt | date:'medium' }}</td>
+                  <td>
+                    <div class="attempt-actions">
+                      <button mat-stroked-button color="primary" (click)="viewAttemptDetails(attempt.attemptId); $event.stopPropagation()">
+                        View Report
+                      </button>
+                      <button mat-icon-button color="warn" (click)="deleteAttempt(attempt.attemptId, $event)" matTooltip="Delete this attempt">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            <ng-template #noAttempts>
+              <p class="no-attempts-message">This user has not taken any quizzes yet.</p>
+            </ng-template>
+          </div>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr mat-row *matRowDef="let user; columns: columnsToDisplay;"
+          class="user-row"
+          [class.expanded-row]="expandedElement === user"
+          (click)="expandedElement = expandedElement === user ? null : user">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+
+    </table>
+  </div>
+</div>
